@@ -1,5 +1,6 @@
-# secure-flask-app
+## Estrutura do projeto
 
+```text
 secure-flask-app/
 ├── app.py
 ├── requirements.txt
@@ -11,3 +12,4 @@ secure-flask-app/
 │   ├── login.html
 │   └── dashboard.html
 └── README.md
+```
