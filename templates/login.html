@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Login — App Seguro{% endblock %}
+{% block content %}
+<h1>Acesso Restrito</h1>
+<form method="POST" action="{{ url_for('login') }}">
+  <!-- A05: Token CSRF obrigatório em todo formulário POST -->
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+  <label for="username">Usuário</label>
+  <input type="text" id="username" name="username"
+         required autocomplete="username"
+         maxlength="32" pattern="[a-zA-Z0-9._-]{3,32}"
+         title="Use apenas letras, números, ponto e hífen">
+
+  <label for="password">Senha</label>
+  <input type="password" id="password" name="password"
+         required autocomplete="current-password">
+
+  <button type="submit">Entrar</button>
+</form>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Painel — App Seguro{% endblock %}
+{% block content %}
+<h1>Bem-vindo, {{ username }}!</h1>
+<p>Esta é uma página protegida. Você só chegou aqui porque está autenticado.</p>
+
+<!-- A01: Logout via POST (com CSRF token) — não pode ser acionado por GET -->
+<form method="POST" action="{{ url_for('logout') }}">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <button type="submit" class="btn-logout">Sair</button>
+</form>
+{% endblock %}
