@@ -28,7 +28,6 @@ python app.py
 
 ## Estrutura do projeto
 
-```text
 secure-flask-app/
 ├── app.py
 ├── requirements.txt
