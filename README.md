@@ -238,3 +238,58 @@ Este é um **protótipo didático**. Para uso em produção, recomenda-se:
 ## 📜 Licença
 
 Distribuído sob a **MIT License** — consulte o arquivo `LICENSE`.
+
+---
+
+## 🚀 Pipeline CI/CD (GitHub Actions)
+
+Toda vez que um `git push origin main` é executado, a pipeline automatiza:
+
+1. **Testes e auditoria de segurança** (`pip-audit` + `bandit`)
+2. **Deploy em produção** via SSH + `rsync`
+3. **Reinício do serviço** com `systemctl`
+4. **Health check** — valida resposta HTTP 200 em `/login`
+
+---
+
+### 🔐 Gerenciamento de Credenciais
+
+**Nenhuma credencial está no código.** Todas são armazenadas em
+**GitHub Secrets** (Settings → Secrets and variables → Actions):
+
+| Secret | Uso |
+|--------|-----|
+| `SSH_HOST` | Endereço do servidor |
+| `SSH_USER` | Usuário SSH dedicado |
+| `SSH_PORT` | Porta SSH |
+| `SSH_PRIVATE_KEY` | Chave privada SSH (ed25519) |
+| `SECRET_KEY_TEST` | Chave Flask usada apenas no job de testes |
+
+---
+
+### 🛡️ Boas Práticas Aplicadas
+
+- ✅ `permissions: contents: read` — princípio do menor privilégio
+- ✅ `concurrency` — evita deploys paralelos conflitantes
+- ✅ `ssh-keyscan` + `known_hosts` — previne ataques MITM
+- ✅ Chave SSH **ed25519** (mais forte que RSA)
+- ✅ Usuário `deploy` dedicado com sudoers restrito
+- ✅ `.env` gerado **no servidor**, nunca trafega pela pipeline
+- ✅ Auditoria de segurança (`pip-audit`, `bandit`) antes do deploy
+- ✅ Job `deploy` só executa se `test` passar (`needs: test`)
+- ✅ `environment: production` — permite aprovação manual se configurado
+
+---
+
+### 🧪 Como Testar
+
+```bash
+# No seu computador
+git add .
+git commit -m "test: dispara pipeline"
+git push origin main
+```
+
+Acompanhe em: **GitHub → Actions → 🚀 Deploy para Produção**
+
+O deploy só é considerado bem-sucedido se o health check retornar HTTP 200.
