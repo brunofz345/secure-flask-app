@@ -43,7 +43,8 @@ csrf = CSRFProtect(app)
 USERS = {
     "admin": {
         "password_hash": generate_password_hash(
-            "SenhaSuperForte!2025#", method="pbkdf2:sha256:600000"
+            os.environ.get("ADMIN_PASSWORD", "trocar-esta-senha"),
+            method="pbkdf2:sha256:600000"
         ),
         "role": "admin",
     }
