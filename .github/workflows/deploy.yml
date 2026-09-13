@@ -107,7 +107,7 @@ jobs:
 
             # Reinicia serviço systemd
             sudo systemctl restart secure-flask-app
-            sudo systemctl status secure-flask-app --no-pager
+            sudo systemctl status secure-flask-app
           EOF
 
       - name: ✅ Health check pós-deploy
