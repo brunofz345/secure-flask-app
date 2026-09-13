@@ -216,3 +216,17 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ── Secret (NEVER commit) ──
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+deploy_key
+deploy_key.pub
+
+# ── Previously covered ──
+__pycache__/
+venv/
+.venv/
